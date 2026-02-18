@@ -21,8 +21,8 @@ Emote is a privacy-first web application that helps users articulate their feeli
 1.  **Browser**: Google Chrome **128+** (Canary or Dev channel recommended).
 2.  **Enable Flags**:
     *   `chrome://flags/#prompt-api-for-gemini-nano` -> **Enabled**
-    *   `chrome://flags/#optimization-guide-on-device-model` -> **Enabled BypassPerfRequirement**
-    *   `chrome://flags/#writer-api-for-gemini-nano` -> **Enabled** (optional)
+    *   `chrome://flags/#optimization-guide-on-device-model` -> **Enabled**
+
 3.  **Model Download**:
     *   Go to `chrome://components`
     *   Find **Optimization Guide On Device Model**
