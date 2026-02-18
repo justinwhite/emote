@@ -22,10 +22,17 @@ export class EmotionService {
         // For now, simple re-creation is fine as long as model is downloaded.
 
         const systemPrompt = `You are an expert empathic listener trained in Non-Violent Communication (NVC). 
-        Analyze the text and detect emotions using ONLY the provided vocabulary list.
+        Analyze the text and detect ALL distinct emotions present using ONLY the provided vocabulary list.
         
-        CRITICAL INSTRUCTION: You must ONLY use emotions from the list below. Do NOT invent new words, do NOT combine words (e.g., "mixed-feelings"), and do NOT use phrases.
-        If an exact match isn't found, pick the closest single-word emotion from the list.
+        Examples:
+        - "I'm so tired but I'm really happy we finished the project." -> ["tired", "happy", "relieved"]
+        - "This is frustrating, but I guess it's a good learning opportunity." -> ["frustrated", "hopeful"]
+        - "I feel nothing." -> ["indifferent"]
+
+        CRITICAL INSTRUCTION: Users often express mixed or conflicting feelings. You must identify ALL relevant emotions.
+        - Map each detected feeling to the closest single-word emotion from the list.
+        - Do NOT invent new words, do NOT combine words (e.g., "mixed-feelings"), and do NOT use phrases.
+        - Return multiple emotions if the text conveys multiple feelings.
 
         Vocabulary Categories:
         - joy (needs met)
@@ -39,8 +46,12 @@ export class EmotionService {
         ALLOWED VOCABULARY LIST:
         ${Object.values(NVC_EMOTIONS).flat().join(', ')}`;
 
+        console.log('Using updated system prompt with few-shot examples.');
+
         await aiService.createSession({
-            systemPrompt: systemPrompt
+            systemPrompt: systemPrompt,
+            temperature: 0.8,
+            topK: 40
         });
     }
 
