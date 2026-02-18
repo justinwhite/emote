@@ -1,11 +1,11 @@
 # Emote: Local AI NVC Assistant
 
-Emote is a privacy-first web application that helps users articulate their feelings using **Non-Violent Communication (NVC)** principles. It uses Google Chrome's built-in **Gemini Nano** (via the Prompt API) to analyze text locally on your device, ensuring your thoughts never leave your browser.
+Emote is a local-first web application that helps users articulate their feelings using **Non-Violent Communication (NVC)** principles. It uses Google Chrome's built-in **Gemini Nano** (via the Prompt API) to analyze text directly on your device, ensuring offline-capable interactions.
 
 ![Success State](public/screenshots/success_state.png)
 
 ## ✨ Key Features
-- **Local AI Processing**: Uses Chrome's experimental Prompt API to run Gemini Nano directly in the browser. No network latency, 100% private.
+- **Local AI Processing**: Uses Chrome's experimental Prompt API to run Gemini Nano directly in the browser. No cloud calls, works completely offline.
 - **NVC Vocabulary**: Trained to detect sophisticated emotions based on Non-Violent Communication literature (e.g., "Exhilarated" instead of just "Happy").
 - **Educational Tooltips**: Hover over any detected emotion to see its precise definition.
 
