@@ -8,7 +8,8 @@ interface EmotionStreamProps {
 }
 
 export function EmotionStream({ emotions, onSelect }: EmotionStreamProps) {
-    const [hoveredEmotion, setHoveredEmotion] = useState<string | null>(null);
+    // const [hoveredEmotion, setHoveredEmotion] = useState<string | null>(null);
+    const [, setHoveredEmotion] = useState<string | null>(null);
 
     if (emotions.length === 0) return null;
 
