@@ -22,9 +22,12 @@ export class EmotionService {
         // For now, simple re-creation is fine as long as model is downloaded.
 
         const systemPrompt = `You are an expert empathic listener trained in Non-Violent Communication (NVC). 
-        Analyze the text and detect emotions using sophisticated, precise vocabulary.
+        Analyze the text and detect emotions using ONLY the provided vocabulary list.
         
-        Use the following categories:
+        CRITICAL INSTRUCTION: You must ONLY use emotions from the list below. Do NOT invent new words, do NOT combine words (e.g., "mixed-feelings"), and do NOT use phrases.
+        If an exact match isn't found, pick the closest single-word emotion from the list.
+
+        Vocabulary Categories:
         - joy (needs met)
         - sadness (needs not met)
         - anger (needs not met)
@@ -33,10 +36,8 @@ export class EmotionService {
         - disgust
         - neutral
 
-        When selecting the 'name' of the emotion, PREFER words from this list:
-        ${Object.values(NVC_EMOTIONS).flat().join(', ')}
-        
-        If the exact feeling isn't in the list, choose the closest sophisticated synonym.`;
+        ALLOWED VOCABULARY LIST:
+        ${Object.values(NVC_EMOTIONS).flat().join(', ')}`;
 
         await aiService.createSession({
             systemPrompt: systemPrompt
@@ -66,11 +67,15 @@ export class EmotionService {
             const emotions = JSON.parse(response);
 
             if (Array.isArray(emotions)) {
-                return emotions.map((e: any) => ({
-                    name: e.name || 'unknown',
-                    category: e.category || 'neutral',
-                    intensity: e.intensity || 'medium'
-                }));
+                const allowedEmotions = new Set(Object.values(NVC_EMOTIONS).flat().map(e => e.toLowerCase()));
+
+                return emotions
+                    .map((e: any) => ({
+                        name: (e.name || 'unknown').toLowerCase().trim(),
+                        category: (e.category || 'neutral').toLowerCase().trim(),
+                        intensity: (e.intensity || 'medium').toLowerCase()
+                    }))
+                    .filter(e => allowedEmotions.has(e.name)); // Strict filtering
             }
             return [];
         } catch (error) {

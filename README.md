@@ -5,13 +5,15 @@ Emote is a privacy-first web application that helps users articulate their feeli
 ![Success State](public/screenshots/success_state.png)
 
 ## ✨ Key Features
-- **Local AI Processing**: Uses Chrome's experimental Prompt API to run Gemini Nano directly in the browser. minimal latency, 100% private.
+- **Local AI Processing**: Uses Chrome's experimental Prompt API to run Gemini Nano directly in the browser. No network latency, 100% private.
 - **NVC Vocabulary**: Trained to detect sophisticated emotions based on Non-Violent Communication literature (e.g., "Exhilarated" instead of just "Happy").
 - **Educational Tooltips**: Hover over any detected emotion to see its precise definition.
 
 ![Tooltips](public/screenshots/tooltips.png)
 
 - **"I Feel..." Builder**: Click emotions to construct a clear, structured sentence.
+
+![Sentence Builder](public/screenshots/sentence_builder.png)
 
 ## 🚀 Prerequisites
 **CRITICAL**: This app requires a specific Chrome environment to function.

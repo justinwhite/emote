@@ -16,6 +16,7 @@ export const NVC_EMOTIONS = {
     sadness: [
         "bereaved", "bitter", "bored", "brokenhearted", "chagrined", "cold", "concerned", "confused", "cranky", "crestfallen", "dejected",
         "depressed", "despairing", "despondent", "detached", "disappointed", "discouraged", "disenchanted", "disgruntled", "disheartened",
+        "conflicted", "ambivalent", "torn", "confused",
         "dismal", "displeased", "disquieted", "distressed", "downcast", "downhearted", "dull", "embarrassed", "embittered", "flat", "frowning",
         "gloom", "gloomy", "grief", "grieved", "heavy", "heavyhearted", "hopeless", "hurt", "impatient", "indifferent", "inert", "joyless",
         "lethargic", "listless", "lonely", "melancholy", "miserable", "moping", "mournful", "numb", "overwhelmed", "pathetic", "pessimistic",
