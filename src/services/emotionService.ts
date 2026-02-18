@@ -1,5 +1,6 @@
 import { aiService } from './aiService';
 import { Emotion } from '../types';
+import { NVC_EMOTIONS } from '../data/emotions';
 
 
 
@@ -19,8 +20,26 @@ export class EmotionService {
         // We might be calling this after a download, so we don't want to overwrite 
         // a session if it was just created for downloading, UNLESS we need to set system prompt.
         // For now, simple re-creation is fine as long as model is downloaded.
+
+        const systemPrompt = `You are an expert empathic listener trained in Non-Violent Communication (NVC). 
+        Analyze the text and detect emotions using sophisticated, precise vocabulary.
+        
+        Use the following categories:
+        - joy (needs met)
+        - sadness (needs not met)
+        - anger (needs not met)
+        - fear (needs not met)
+        - surprise
+        - disgust
+        - neutral
+
+        When selecting the 'name' of the emotion, PREFER words from this list:
+        ${Object.values(NVC_EMOTIONS).flat().join(', ')}
+        
+        If the exact feeling isn't in the list, choose the closest sophisticated synonym.`;
+
         await aiService.createSession({
-            systemPrompt: 'You are an expert empathic listener. Analyze the text and detect emotions.',
+            systemPrompt: systemPrompt
         });
     }
 
