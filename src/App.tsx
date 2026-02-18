@@ -27,7 +27,7 @@ function App() {
                 <p className="text-gray-500 font-medium tracking-wide">Express yourself with clarity</p>
             </div>
 
-            <div className="flex-1 flex flex-col items-center w-full max-w-lg mx-auto px-4">
+            <div className="flex-1 flex flex-col items-center w-full max-w-xl mx-auto px-4">
                 {(status.status === 'error' || (status.status === 'ready' && status.error)) && (
                     <div className={`w-full mb-6 p-4 rounded-xl text-sm border ${status.error?.includes('Mock')
                         ? 'bg-yellow-50 text-yellow-700 border-yellow-100'
