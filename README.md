@@ -1,4 +1,5 @@
 # Emote: Local AI NVC Assistant
+**[Live Demo](https://emote-nvc.netlify.app/)**
 
 Emote is a local-first web application that helps users articulate their feelings using **Non-Violent Communication (NVC)** principles. It uses Google Chrome's built-in **Gemini Nano** (via the Prompt API) to analyze text directly on your device, ensuring offline-capable interactions.
 
@@ -18,7 +19,7 @@ Emote is a local-first web application that helps users articulate their feeling
 ## 🚀 Prerequisites
 **CRITICAL**: This app requires a specific Chrome environment to function.
 
-1.  **Browser**: Google Chrome **128+** (Canary or Dev channel recommended).
+1.  **Device / Hardware**: Ensure your device meets the [minimum hardware requirements](https://developer.chrome.com/docs/ai/prompt-api#hardware-requirements).
 2.  **Enable Flags**:
     *   `chrome://flags/#prompt-api-for-gemini-nano` -> **Enabled**
     *   `chrome://flags/#optimization-guide-on-device-model` -> **Enabled**
