@@ -1,6 +1,6 @@
 import { aiService } from './aiService';
 import { Emotion } from '../types';
-import { NVC_EMOTIONS } from '../data/emotions';
+import { getEmotionList, getTopLevelCategory } from '../data/emotions';
 
 
 
@@ -25,26 +25,21 @@ export class EmotionService {
         Analyze the text and detect ALL distinct emotions present using ONLY the provided vocabulary list.
         
         Examples:
-        - "I'm so tired but I'm really happy we finished the project." -> ["tired", "happy", "relieved"]
-        - "This is frustrating, but I guess it's a good learning opportunity." -> ["frustrated", "hopeful"]
-        - "I feel nothing." -> ["indifferent"]
+        - "I'm so tired but I'm really happy we finished the project." -> [{"name": "anxious", "intensity": "medium"}, {"name": "happy", "intensity": "high"}, {"name": "relieved", "intensity": "medium"}]
+        - "This is frustrating, but I guess it's a good learning opportunity." -> [{"name": "frustrated", "intensity": "high"}, {"name": "hopeful", "intensity": "medium"}]
+        - "I feel nothing." -> [{"name": "neutral", "intensity": "low"}]
 
         CRITICAL INSTRUCTION: Users often express mixed or conflicting feelings. You must identify ALL relevant emotions.
-        - Map each detected feeling to the closest single-word emotion from the list.
+        - Map specific feelings to the most specific (lowest-level) emotion possible from the list.
+        - If a feeling is broader or less specific, map it to a higher-level category (e.g., 'sadness' or 'depressed' rather than forcing an overly specific word like 'sorrow' for general sadness).
         - Do NOT invent new words, do NOT combine words (e.g., "mixed-feelings"), and do NOT use phrases.
         - Return multiple emotions if the text conveys multiple feelings.
 
         Vocabulary Categories:
-        - joy (needs met)
-        - sadness (needs not met)
-        - anger (needs not met)
-        - fear (needs not met)
-        - surprise
-        - disgust
-        - neutral
+        - joy, sadness, anger, fear, surprise, love, neutral
 
         ALLOWED VOCABULARY LIST:
-        ${Object.values(NVC_EMOTIONS).flat().join(', ')}`;
+        ${getEmotionList().join(', ')}`;
 
         console.log('Using updated system prompt with few-shot examples.');
 
@@ -67,7 +62,7 @@ export class EmotionService {
                         type: "object",
                         properties: {
                             name: { type: "string" },
-                            category: { type: "string", enum: ["joy", "sadness", "anger", "fear", "surprise", "disgust", "neutral"] },
+                            category: { type: "string", enum: ["joy", "sadness", "anger", "fear", "surprise", "love", "neutral"] },
                             intensity: { type: "string", enum: ["low", "medium", "high"] }
                         }
                     }
@@ -78,14 +73,17 @@ export class EmotionService {
             const emotions = JSON.parse(response);
 
             if (Array.isArray(emotions)) {
-                const allowedEmotions = new Set(Object.values(NVC_EMOTIONS).flat().map(e => e.toLowerCase()));
+                const allowedEmotions = new Set(getEmotionList().map(e => e.toLowerCase()));
 
                 return emotions
-                    .map((e: any) => ({
-                        name: (e.name || 'unknown').toLowerCase().trim(),
-                        category: (e.category || 'neutral').toLowerCase().trim(),
-                        intensity: (e.intensity || 'medium').toLowerCase()
-                    }))
+                    .map((e: any) => {
+                        const name = (e.name || 'unknown').toLowerCase().trim();
+                        return {
+                            name,
+                            category: getTopLevelCategory(name),
+                            intensity: (e.intensity || 'medium').toLowerCase()
+                        };
+                    })
                     .filter(e => allowedEmotions.has(e.name)); // Strict filtering
             }
             return [];

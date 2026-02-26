@@ -1,6 +1,6 @@
 export interface Emotion {
     name: string;
-    category: 'joy' | 'sadness' | 'anger' | 'fear' | 'surprise' | 'disgust' | 'neutral';
+    category: 'joy' | 'sadness' | 'anger' | 'fear' | 'surprise' | 'love' | 'neutral';
     intensity: 'low' | 'medium' | 'high';
     color?: string; // Hex code for UI
 }
