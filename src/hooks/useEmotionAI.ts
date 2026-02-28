@@ -59,8 +59,9 @@ export function useEmotionAI() {
         try {
             const results = await emotionService.detectEmotions(text);
             setEmotions(results);
-        } catch (e) {
+        } catch (e: any) {
             console.error(e);
+            alert("AI Error: " + (e.message || String(e)));
         } finally {
             setIsProcessing(false);
         }
