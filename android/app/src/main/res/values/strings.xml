@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="app_name">Emote</string>
+    <string name="title_activity_main">Emote</string>
+    <string name="package_name">com.justinwhite.emote</string>
+    <string name="custom_url_scheme">com.justinwhite.emote</string>
+</resources>
