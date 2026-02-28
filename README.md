@@ -68,5 +68,15 @@ If you see a yellow **"Using Mock AI"** banner, it means the Chrome Prompt API w
 ## 📦 Tech Stack
 - **Framework**: React + TypeScript (Vite)
 - **Styling**: Tailwind CSS
-- **AI**: Chrome Prompt API (Gemini Nano)
+- **AI Web**: Chrome Prompt API (Gemini Nano)
+- **AI Native**: Android ML Kit GenAI (Gemini Nano NPU)
 - **Data**: Custom NVC Emotion Dictionary
+
+## 📱 Android Native App
+Emote is also available as a true offline-native Android app powered by **Capacitor**. When executed natively on an Android device running the Gemini Nano NPU (e.g., Pixel 8 Pro or Pixel 9), Emote entirely bypasses Chrome and utilizes the low-level **Google ML Kit GenAI Prompt API** for zero-latency inference directly on silicon. 
+
+### Running on Android Studio
+1. Compile the JS Bundle: `npm run build`
+2. Sync Capacitor plugins: `npx cap sync android`
+3. Open Android Studio: `npx cap open android`
+4. Click **Run** on your physical Pixel device.
