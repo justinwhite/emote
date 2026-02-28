@@ -1,4 +1,6 @@
 import { AIState, AiSession } from '../types';
+import { Capacitor } from '@capacitor/core';
+import { LocalAI } from './localAIPlugin';
 
 // Augment window interface for Chrome AI
 declare global {
@@ -22,6 +24,7 @@ declare global {
 
 export class AIService {
     private session: AiSession | null = null;
+    private nativeSystemPrompt: string = '';
     private static instance: AIService;
 
     private constructor() { }
@@ -36,6 +39,14 @@ export class AIService {
     private useMock: boolean = false;
 
     async checkAvailability(): Promise<AIState> {
+        if (Capacitor.isNativePlatform()) {
+            return {
+                isAvailable: true,
+                status: 'ready',
+                error: null
+            };
+        }
+
         // Prioritize the newer LanguageModel API
         if (window.LanguageModel) {
             try {
@@ -138,6 +149,13 @@ export class AIService {
             this.session.destroy();
         }
 
+        if (Capacitor.isNativePlatform()) {
+            if (options?.systemPrompt) {
+                this.nativeSystemPrompt = options.systemPrompt;
+            }
+            return;
+        }
+
         try {
             if (window.LanguageModel) {
                 // Map systemPrompt to initialPrompts if present
@@ -176,6 +194,14 @@ export class AIService {
     }
 
     async prompt(input: string, options?: any): Promise<string> {
+        if (Capacitor.isNativePlatform()) {
+            const response = await LocalAI.generateEmotions({
+                text: input,
+                systemPrompt: this.nativeSystemPrompt
+            });
+            return response.result;
+        }
+
         if (!this.session) {
             await this.createSession();
         }

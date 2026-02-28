@@ -89,7 +89,7 @@ export class EmotionService {
             return [];
         } catch (error) {
             console.error('Failed to parse emotions:', error);
-            return [];
+            throw error;
         }
     }
 }

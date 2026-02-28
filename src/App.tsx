@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { Capacitor } from '@capacitor/core';
 import { InputArea } from './components/InputArea';
 import { EmotionStream } from './components/EmotionStream';
 import { SentenceBuilder } from './components/SentenceBuilder';
@@ -25,6 +26,12 @@ function App() {
             <div className="text-center mb-8 px-6">
                 <h1 className="text-4xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-indigo-600 to-purple-600 mb-2">Emote</h1>
                 <p className="text-gray-500 font-medium tracking-wide">Express yourself with clarity</p>
+
+                {status.isAvailable && (
+                    <p className="text-xs text-indigo-400 mt-2">
+                        Platform: {Capacitor.isNativePlatform() ? 'Android Native NPU' : (status.error?.includes('Mock') ? 'Mock API' : 'Chrome window.ai')}
+                    </p>
+                )}
             </div>
 
             <div className="flex-1 flex flex-col items-center w-full max-w-xl mx-auto px-4">
